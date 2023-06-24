@@ -1,299 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>Test</title>
-</head>
-<body>
-<div class="container">
-    <table border="3" class="table">
-        <!--Это заголовки таблицы-->
-        <tr>
-            <th colspan="3" scope="col" >Таблица истинности PHP</th>
+<?php
+$persons_array = [
+    [
+        'fullname' => 'Иванов Иван Иванович',
+        'job' => 'tester',
+    ],
+    [
+        'fullname' => 'Степанова Наталья Степановна',
+        'job' => 'frontend-developer',
+    ],
+    [
+        'fullname' => 'Пащенко Владимир Александрович',
+        'job' => 'analyst',
+    ],
+    [
+        'fullname' => 'Громов Александр Иванович',
+        'job' => 'fullstack-developer',
+    ],
+    [
+        'fullname' => 'Славин Семён Сергеевич',
+        'job' => 'analyst',
+    ],
+    [
+        'fullname' => 'Цой Владимир Антонович',
+        'job' => 'frontend-developer',
+    ],
+    [
+        'fullname' => 'Быстрая Юлия Сергеевна',
+        'job' => 'PR-manager',
+    ],
+    [
+        'fullname' => 'Шматко Антонина Сергеевна',
+        'job' => 'HR-manager',
+    ],
+    [
+        'fullname' => 'аль-Хорезми Мухаммад ибн-Муса',
+        'job' => 'analyst',
+    ],
+    [
+        'fullname' => 'Бардо Жаклин Фёдоровна',
+        'job' => 'android-developer',
+    ],
+    [
+        'fullname' => 'Шварцнегер Арнольд Густавович',
+        'job' => 'babysitter',
+    ],
+];
 
-        </tr>
-        <tr>
-            <th scope="col">A</th>
-            <th scope="col">B</th>
-            <th scope="col">!A</th>
-            <th scope="col">A || B</th>
-            <th scope="col">A && B</th>
-            <th scope="col">A xor B</th>
+function getPartsFromFullname($fullName){
+    $splitting_name = explode(" ",$fullName);
+    $splited_name = ['Фамилия' => $splitting_name[0], 'Имя' => $splitting_name[1],'Отчество' => $splitting_name[2],
+    ] ;
 
-        </tr>
-        <!--Это будет первый ряд таблицы:-->
-        <tr class="table-primary">
-            <td><?= $firstA = 0 ?></td>
-            <td><?= $firstB = 0 ?></td>
-            <td><?= ! $firstA ?></td>
-            <td><?=  (int)$firstor = $firstA || $firstB ?></td>
-            <td><?=  (int)$firstand = $firstA && $firstB ?></td>
-            <td><?=  $firstxor = $firstA ^ $firstB ?></td>
-        </tr>
+    return $splited_name;
 
-        <!--Это будет второй ряд таблицы:-->
-        <tr>
-            <td><?= $secondA = 0 ?></td>
-            <td><?= $secondB = 1 ?></td>
-            <td><?= ! $secondA  ?></td>
-            <td><?=  (int)$secondor = $secondA || $secondB ?></td>
-            <td><?=  (int)$secondand = $secondA && $secondB ?></td>
-            <td><?=  $secondxor = $secondA ^ $secondB ?></td>
-        </tr>
+}
 
-        <!--Это будет третий ряд таблицы:-->
-        <tr class="table-primary">
-            <td><?= $thirdA = 1 ?></td>
-            <td><?= $thirdB = 0 ?></td>
-            <td><?= (int)!$thirdA ?></td>
-            <td><?=  (int)$thirdor = $thirdA || $thirdB ?></td>
-            <td><?=  (int)$thirdand = $thirdA && $thirdB ?></td>
-            <td><?=  $thirdxor = $thirdA ^ $thirdB ?></td>
-        </tr>
-        <tr>
-            <td><?= $fourthA = 1 ?></td>
-            <td><?= $fourthB = 1 ?></td>
-            <td><?= (int)!$fourthA ?></td>
-            <td><?=  (int)$fourthor = $fourthA || $fourthB ?></td>
-            <td><?=  (int)$fourthand = $fourthA && $fourthB ?></td>
-            <td><?=  $fourthxor = $fourthA ^ $fourthB ?></td>
-        </tr>
+function getFullnameFromParts($surname, $name, $patronomyc){
+    $fullName = [$surname, $name, $patronomyc];
+    return implode(' ', $fullName);
+}
 
-    </table>
-    <!-----------таблицы-------------------->
-    <table border="3" class="table">
-        <!--Это заголовки таблицы-->
-        <tr>
-            <th colspan="9" >Гибкое сравнение в PHP</th>
+function getShortName($fullName){
+    $splited_name = getPartsFromFullname($fullName);
+    $shortName = $splited_name["Имя"].' '.mb_substr($splited_name["Фамилия"],0,1).".";
 
-        </tr>
-        <tr class="table-primary">
-            <th scope="col"></th>
-            <th scope="col"><?= " true" ?></th>
-            <th scope="col"><?= "false" ?></th>
-            <th scope="col"><?= 1 ?></th>
-            <th scope="col"><?=  0 ?></th>
-            <th scope="col"><?= -1 ?></th>
-            <th scope="col"><?= "1" ?></th>
-            <th scope="col"><?= "null" ?></th>
-            <th scope="col"><?= "php" ?></th>
+    return $shortName;
+}
 
-        </tr>
-        <!--Это будет первый ряд таблицы:-->
-        <tr>
-            <th scope="row"><?= " true" ?></th>
-            <td><?= (int)(($thisIsTrue = true) == ($thatIsTrue = true)) ?></td>
-            <td><?= (int)(($thisIsFalse = false) == $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsOne = 1) == $thatIsTrue )?></td>
-            <td><?= (int)(($thisIsZero = 0) == $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsMinusOne = -1) == $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsStrOne = "1") == $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsNull = null) == $thatIsTrue )?></td>
-            <td><?= (int)(($thisIsPHP = "php") == $thatIsTrue) ?></td>
-        </tr>
+function getGenderFromName($fullName){
+    $splited_name = getPartsFromFullname($fullName);
+    $gender = 0;
+    
+    
 
-        <!--Это будет второй ряд таблицы:-->
-        <tr class="table-primary">
-            <th scope="row"><?=  "false" ?></th>
-            <td><?= (int)($thisIsTrue == ($thatIsFalse = false)) ?></td>
-            <td><?= (int)($thisIsFalse == $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsOne == $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsZero == $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsMinusOne == $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsStrOne == $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsNull == $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsPHP == $thatIsFalse) ?></td>
-        </tr>
+    if (mb_substr($splited_name["Фамилия"],-2,2) == "ва"){
+        $gender = -1;
+    } else if (mb_substr($splited_name["Фамилия"],-1,1) == "в"){
+        $gender = 1;
+    } else {
+        $gender = 0;
+    }
+    
+    $genderName = mb_substr($splited_name["Имя"],-1,1);
 
-        <!--Это будет третий ряд таблицы:-->
-        <tr>
+    if ($genderName == "a"){
+        $gender = -1;
+    } else if ($genderName == "й" || $genderName == "н"){
+        $gender = 1;
+    } else {
+        $gender = 0;
+    }
 
-            <th scope="row"><?=  1 ?></th>
-            <td><?= (int)($thisIsTrue == ($thatIsOne = 1)) ?></td>
-            <td><?= (int)($thisIsFalse == $thatIsOne) ?></td>
-            <td><?= (int)($thisIsOne == $thatIsOne) ?></td>
-            <td><?= (int)($thisIsZero == $thatIsOne) ?></td>
-            <td><?= (int)($thisIsMinusOne == $thatIsOne) ?></td>
-            <td><?= (int)($thisIsStrOne == $thatIsOne )?></td>
-            <td><?= (int)($thisIsNull == $thatIsOne) ?></td>
-            <td><?= (int)($thisIsPHP == $thatIsOne) ?></td>
-        </tr>
-        <tr class="table-primary">
-            <th scope="row"><?=  0 ?></th>
-            <td><?= (int)($thisIsTrue == ($thatIsZero = 0)) ?></td>
-            <td><?= (int)($thisIsFalse == $thatIsZero) ?></td>
-            <td><?= (int)($thisIsOne == $thatIsZero) ?></td>
-            <td><?= (int)($thisIsZero == $thatIsZero) ?></td>
-            <td><?= (int)($thisIsMinusOne == $thatIsZero) ?></td>
-            <td><?= (int)($thisIsStrOne == $thatIsZero) ?></td>
-            <td><?= (int)($thisIsNull == $thatIsZero) ?></td>
-            <td><?= (int)($thisIsPHP == $thatIsZero) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?=  -1 ?></th>
-            <td><?= (int)($thisIsTrue == ($thatIsMinusOne = -1)) ?></td>
-            <td><?= (int)($thisIsFalse == $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsOne == $thatIsMinusOne )?></td>
-            <td><?= (int)($thisIsZero == $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsMinusOne == $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsStrOne == $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsNull == $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsPHP == $thatIsMinusOne) ?></td>
-        </tr>
-        <tr class="table-primary">
-            <th scope="row"><?= "1" ?></th>
-            <td><?= (int)($thisIsTrue == ($thatIsStrOne = "1")) ?></td>
-            <td><?= (int)($thisIsFalse == $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsOne == $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsZero == $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsMinusOne == $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsStrOne == $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsNull == $thatIsStrOne )?></td>
-            <td><?= (int)($thisIsPHP == $thatIsStrOne) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= "null" ?></th>
-            <td><?= (int)($thisIsTrue == ($thatIsNull = null)) ?></td>
-            <td><?= (int)($thisIsFalse == $thatIsNull) ?></td>
-            <td><?= (int)($thisIsOne == $thatIsNull) ?></td>
-            <td><?= (int)($thisIsZero == $thatIsNull) ?></td>
-            <td><?= (int)($thisIsMinusOne == $thatIsNull) ?></td>
-            <td><?= (int)($thisIsStrOne == $thatIsNull) ?></td>
-            <td><?= (int)($thisIsNull == $thatIsNull) ?></td>
-            <td><?= (int)($thisIsPHP == $thatIsNull) ?></td>
-        </tr>
-        <tr class="table-primary">
-            <th scope="row"><?=  "php" ?></th>
-            <td><?= (int)($thisIsTrue == ($thatIsPHP = "php")) ?></td>
-            <td><?= (int)($thisIsFalse == $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsOne == $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsZero == $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsMinusOne == $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsStrOne == $thatIsPHP )?></td>
-            <td><?= (int)($thisIsNull == $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsPHP == $thatIsPHP) ?></td>
-        </tr>
+    if (mb_substr($splited_name["Отчество"],-3,3) == "вна"){
+        $gender = -1;
+    } else if (mb_substr($splited_name["Отчество"],-2,2) == "ич"){
+        $gender = 1;
+    } else {
+        $gender = 0;
+    }
 
-    </table>
-    <table border="3" class="table">
-        <!--Это заголовки таблицы-->
-        <tr>
-            <th colspan="9" >Жёсткое сравнение в PHP</th>
+    if (($gender <=> 0) === 1){
+        return "Мужчина";
+    } else if (($gender <=> 0) === -1){
+        return "Женщина";
+    } else {
+        return "Неизвестно";
+    }
 
-        </tr>
-        <tr class="table-primary">
-            <th scope="col"></th>
-            <th scope="col"><?= " true" ?></th>
-            <th scope="col"><?= "false" ?></th>
-            <th scope="col"><?= 1 ?></th>
-            <th scope="col"><?=  0 ?></th>
-            <th scope="col"><?= -1 ?></th>
-            <th scope="col"><?= "1" ?></th>
-            <th scope="col"><?= "null" ?></th>
-            <th scope="col"><?= "php" ?></th>
+}
 
-        </tr>
-        <!--Это будет первый ряд таблицы:-->
-        <tr>
-            <th scope="row"><?= " true" ?></th>
-            <td><?= (int)(($thisIsTrue = true) === ($thatIsTrue = true)) ?></td>
-            <td><?= (int)(($thisIsFalse = false) === $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsOne = 1) === $thatIsTrue )?></td>
-            <td><?= (int)(($thisIsZero = 0) === $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsMinusOne = -1) === $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsStrOne = "1") === $thatIsTrue) ?></td>
-            <td><?= (int)(($thisIsNull = null) === $thatIsTrue )?></td>
-            <td><?= (int)(($thisIsPHP = "php") === $thatIsTrue) ?></td>
-        </tr>
+function getGenderDescription($array){
 
-        <!--Это будет второй ряд таблицы:-->
-        <tr class="table-primary">
-            <th scope="row"><?=  "false" ?></th>
-            <td><?= (int)($thisIsTrue === ($thatIsFalse = false)) ?></td>
-            <td><?= (int)($thisIsFalse === $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsOne === $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsZero === $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsMinusOne === $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsStrOne === $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsNull === $thatIsFalse) ?></td>
-            <td><?= (int)($thisIsPHP === $thatIsFalse) ?></td>
-        </tr>
+    $male = array_filter($array, function($array) {
+        return (getGenderFromName($array['fullname']) == "Мужчина");
+    });
 
-        <!--Это будет третий ряд таблицы:-->
-        <tr>
+    $female = array_filter($array, function($array) {
+        return (getGenderFromName($array['fullname']) == "Женщина");
+    });
 
-            <th scope="row"><?=  1 ?></th>
-            <td><?= (int)($thisIsTrue === ($thatIsOne = 1)) ?></td>
-            <td><?= (int)($thisIsFalse === $thatIsOne) ?></td>
-            <td><?= (int)($thisIsOne === $thatIsOne) ?></td>
-            <td><?= (int)($thisIsZero === $thatIsOne) ?></td>
-            <td><?= (int)($thisIsMinusOne === $thatIsOne) ?></td>
-            <td><?= (int)($thisIsStrOne === $thatIsOne )?></td>
-            <td><?= (int)($thisIsNull === $thatIsOne) ?></td>
-            <td><?= (int)($thisIsPHP === $thatIsOne) ?></td>
-        </tr>
-        <tr class="table-primary">
-            <th scope="row"><?=  0 ?></th>
-            <td><?= (int)($thisIsTrue === ($thatIsZero = 0)) ?></td>
-            <td><?= (int)($thisIsFalse === $thatIsZero) ?></td>
-            <td><?= (int)($thisIsOne === $thatIsZero) ?></td>
-            <td><?= (int)($thisIsZero === $thatIsZero) ?></td>
-            <td><?= (int)($thisIsMinusOne === $thatIsZero) ?></td>
-            <td><?= (int)($thisIsStrOne === $thatIsZero) ?></td>
-            <td><?= (int)($thisIsNull === $thatIsZero) ?></td>
-            <td><?= (int)($thisIsPHP === $thatIsZero) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?=  -1 ?></th>
-            <td><?= (int)($thisIsTrue === ($thatIsMinusOne = -1)) ?></td>
-            <td><?= (int)($thisIsFalse === $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsOne === $thatIsMinusOne )?></td>
-            <td><?= (int)($thisIsZero === $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsMinusOne === $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsStrOne === $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsNull === $thatIsMinusOne) ?></td>
-            <td><?= (int)($thisIsPHP === $thatIsMinusOne) ?></td>
-        </tr>
-        <tr class="table-primary">
-            <th scope="row"><?= "1" ?></th>
-            <td><?= (int)($thisIsTrue === ($thatIsStrOne = "1")) ?></td>
-            <td><?= (int)($thisIsFalse === $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsOne === $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsZero === $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsMinusOne === $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsStrOne === $thatIsStrOne) ?></td>
-            <td><?= (int)($thisIsNull === $thatIsStrOne )?></td>
-            <td><?= (int)($thisIsPHP === $thatIsStrOne) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= "null" ?></th>
-            <td><?= (int)($thisIsTrue === ($thatIsNull = null)) ?></td>
-            <td><?= (int)($thisIsFalse === $thatIsNull) ?></td>
-            <td><?= (int)($thisIsOne === $thatIsNull) ?></td>
-            <td><?= (int)($thisIsZero === $thatIsNull) ?></td>
-            <td><?= (int)($thisIsMinusOne === $thatIsNull) ?></td>
-            <td><?= (int)($thisIsStrOne === $thatIsNull) ?></td>
-            <td><?= (int)($thisIsNull === $thatIsNull) ?></td>
-            <td><?= (int)($thisIsPHP === $thatIsNull) ?></td>
-        </tr>
-        <tr class="table-primary">
-            <th scope="row"><?=  "php" ?></th>
-            <td><?= (int)($thisIsTrue === ($thatIsPHP = "php")) ?></td>
-            <td><?= (int)($thisIsFalse === $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsOne === $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsZero === $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsMinusOne === $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsStrOne === $thatIsPHP )?></td>
-            <td><?= (int)($thisIsNull === $thatIsPHP) ?></td>
-            <td><?= (int)($thisIsPHP === $thatIsPHP) ?></td>
-        </tr>
+    $unknown = array_filter($array, function($array) {
+        return (getGenderFromName($array['fullname']) == "Неизвестно");
+    });
 
-    </table>
-</div>
 
-</body>
-</html>
+    $summa = count($male) + count($female) + count($unknown);
+    $resultMale =  round(count($male) / $summa * 100, 2);
+    $resultFemale = round(count($female) / $summa * 100, 2);
+    $resultUnknown = round(count($unknown) / $summa  * 100, 2);
+
+    echo <<<HEREDOC
+    Гендерный состав аудитории:<br>
+    ---------------------------<br>
+    Мужчины - $resultMale%<br>
+    Женщины - $resultFemale%<br>
+    Не удалось определить - $resultUnknown%<br>
+    HEREDOC;
+
+}
+
+function getPerfectPartner($surname, $name, $patronomyc, $array){
+    $surnamePerson = mb_convert_case($surname, MB_CASE_TITLE_SIMPLE);
+	$namePerson = mb_convert_case($name, MB_CASE_TITLE_SIMPLE);
+	$patronomycPerson = mb_convert_case($patronomyc, MB_CASE_TITLE_SIMPLE); 
+    $fullName = getFullnameFromParts($surnamePerson, $namePerson, $patronomycPerson);
+    $mainGender = getGenderFromName($fullName);   
+    $randPerson = $array[rand(0,count($array)-1)]["fullname"];
+    $randGender = getGenderFromName($randPerson);
+    
+    while ($mainGender == $randGender || $randGender === "Undefined"){
+        $randPerson = $array[rand(0,count($array)-1)]["fullname"];
+        $randGender = getGenderFromName($randPerson);
+    }
+
+    $mainName = getShortName($fullName);
+    $randomName = getShortName($randPerson);
+    $percent = rand(50,100)+rand(0,99)/100;
+
+    echo <<<HEREDOC
+    $mainName + $randomName =<br>
+    ♡ Идеально на $percent% ♡
+    HEREDOC;
+
+}
+
+echo 
+print_r(getFullnameFromParts("Иванов", "Иван", "Иванович") . "<br>");
+echo "<br>";
+print_r(getPartsFromFullname("Иванов Иван Иванович"));
+echo "<br>";
+print_r(getShortName("Иванов Иван Иванович") . "<br>");
+echo "<br>";
+print_r(getGenderFromName("Иванов Иван Иванович") . "<br>");
+echo "<br>";
+getGenderDescription($persons_array);
+echo "<br>";
+getPerfectPartner("ИВАнов", "ИВАН", "ИваНович", $persons_array);
+  
+?>

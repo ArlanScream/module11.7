@@ -48,7 +48,7 @@ $persons_array = [
 
 function getPartsFromFullname($fullName){
     $splitting_name = explode(" ",$fullName);
-    $splited_name = ['Фамилия' => $splitting_name[0], 'Имя' => $splitting_name[1],'Отчество' => $splitting_name[2],
+    $splited_name = ['surname' => $splitting_name[0], 'name' => $splitting_name[1],'patronomyc' => $splitting_name[2],
     ] ;
 
     return $splited_name;
@@ -62,7 +62,7 @@ function getFullnameFromParts($surname, $name, $patronomyc){
 
 function getShortName($fullName){
     $splited_name = getPartsFromFullname($fullName);
-    $shortName = $splited_name["Имя"].' '.mb_substr($splited_name["Фамилия"],0,1).".";
+    $shortName = $splited_name["name"].' '.mb_substr($splited_name["surname"],0,1).".";
 
     return $shortName;
 }
@@ -73,38 +73,38 @@ function getGenderFromName($fullName){
     
     
 
-    if (mb_substr($splited_name["Фамилия"],-2,2) == "ва"){
+    if (mb_substr($splited_name["surname"],-2,2) == "ва"){
         $gender = -1;
-    } else if (mb_substr($splited_name["Фамилия"],-1,1) == "в"){
+    } elseif (mb_substr($splited_name["surname"],-1,1) == "в"){
         $gender = 1;
     } else {
         $gender = 0;
     }
     
-    $genderName = mb_substr($splited_name["Имя"],-1,1);
+    $genderName = mb_substr($splited_name["name"],-1,1);
 
     if ($genderName == "a"){
         $gender = -1;
-    } else if ($genderName == "й" || $genderName == "н"){
+    } elseif ($genderName == "й" || $genderName == "н"){
         $gender = 1;
     } else {
         $gender = 0;
     }
 
-    if (mb_substr($splited_name["Отчество"],-3,3) == "вна"){
+    if (mb_substr($splited_name["patronomyc"],-3,3) == "вна"){
         $gender = -1;
-    } else if (mb_substr($splited_name["Отчество"],-2,2) == "ич"){
+    } elseif (mb_substr($splited_name["patronomyc"],-2,2) == "ич"){
         $gender = 1;
     } else {
         $gender = 0;
     }
 
     if (($gender <=> 0) === 1){
-        return "Мужчина";
-    } else if (($gender <=> 0) === -1){
-        return "Женщина";
+        return "male";
+    } elseif (($gender <=> 0) === -1){
+        return "female";
     } else {
-        return "Неизвестно";
+        return "unknown";
     }
 
 }
@@ -112,15 +112,15 @@ function getGenderFromName($fullName){
 function getGenderDescription($array){
 
     $male = array_filter($array, function($array) {
-        return (getGenderFromName($array['fullname']) == "Мужчина");
+        return (getGenderFromName($array['fullname']) == "male");
     });
 
     $female = array_filter($array, function($array) {
-        return (getGenderFromName($array['fullname']) == "Женщина");
+        return (getGenderFromName($array['fullname']) == "female");
     });
 
     $unknown = array_filter($array, function($array) {
-        return (getGenderFromName($array['fullname']) == "Неизвестно");
+        return (getGenderFromName($array['fullname']) == "unknown");
     });
 
 
